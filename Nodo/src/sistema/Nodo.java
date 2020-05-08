@@ -21,35 +21,37 @@ public class Nodo {
      * @param args argumentos de la línea de comandos
      */
     public static void main(String[] args) {
-        System.out.println("Ingrese la velocidad: ");
-        double velocidad ;
-        Scanner lectura0 = new Scanner(System.in) ;
-        velocidad = lectura0.nextInt();
-
-        System.out.println("Ingrese eventos: ");
-        int cantEventos ;
-        Scanner lectura = new Scanner(System.in) ;
-        cantEventos = lectura.nextInt();
+        //Argumentos: nombreNodo, velocidadEventos, host, puerto
+        //Validamos los argumentos
+        int puerto =0;
+        double velocidad =0;
+        if (args.length == 4){
+            try{
+               puerto = Integer.parseInt(args[3]);
+            }
+            catch (Exception e){
+                System.out.println("Debe pasar un entero como puerto");
+                }
+            try {
+                velocidad = Double.parseDouble(args[1]);
+            } catch (Exception e) {
+                System.out.println("Debe pasar un double como velocidad");
+            }
+        }else{
+            System.out.println("Error en argumentos: debe pasar nombreNodo, velocidadEventos, host, puerto");
+            System.exit(0);
+        }
         
-        System.out.println("Ingrese Puerto: ");
-        int puerto ;
-        Scanner lectura2 = new Scanner(System.in) ;
-        puerto = lectura2.nextInt();
-        
-        System.out.println("Ingrese Nombre de Nodo: ");
-        String nodo ;
-        Scanner lectura3 = new Scanner(System.in) ;
-        nodo = lectura3.nextLine();
-       
-        
+        String nodo = args[0];
+        String ip = args[2];
         
         
         try {
-            Socket s = new Socket("localhost", puerto);  
+            Socket s = new Socket(ip, puerto);  
             OutputStream os = s.getOutputStream();
             ObjectOutput alServidor = new ObjectOutputStream(os);
             
-            Generador generador = new Generador(velocidad, cantEventos, nodo, alServidor);
+            Generador generador = new Generador(velocidad, nodo, alServidor);
             generador.iniciar();
 
             try {

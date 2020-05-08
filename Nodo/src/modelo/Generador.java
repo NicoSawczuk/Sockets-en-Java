@@ -17,16 +17,16 @@ import org.apache.commons.math3.distribution.ExponentialDistribution;
  */
 public class Generador {
     private final double velocidad;
-    private final int evento;
     private final String nombreNodo;
+    private long tiempoArranque = System.currentTimeMillis();
+    private long tiempoRecalculado;
     private final ObjectOutput alServidor;
     /**
      * Constructor del generador de logs
      * @param velocidad velocidad del generador
      */
-    public Generador(double velocidad , int evento, String nombreNodo, ObjectOutput alServidor) {
+    public Generador(double velocidad, String nombreNodo, ObjectOutput alServidor) {
         this.velocidad = velocidad;
-        this.evento = evento ;
         this.nombreNodo = nombreNodo;
         this.alServidor = alServidor;
     }
@@ -39,10 +39,11 @@ public class Generador {
     public void iniciar() throws NoSuchAlgorithmException, InterruptedException, IOException {
         int cantidad = 0;
         alServidor.writeObject(this.nombreNodo);
-        while (cantidad < this.evento) {
+        do{
             cantidad++;
             // tiempo
             long tiempo = System.currentTimeMillis();
+            this.tiempoRecalculado = tiempo;
             // sha 256
             MessageDigest texto = MessageDigest.getInstance("SHA-256");
             // arreglo de 20 bytes
@@ -61,6 +62,7 @@ public class Generador {
             alServidor.flush();            
             Thread.sleep(esperar);
         }
+        while ((this.tiempoRecalculado - this.tiempoArranque) < 100000 );
     }
     
     /**
