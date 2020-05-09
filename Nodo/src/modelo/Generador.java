@@ -57,8 +57,9 @@ public class Generador {
             // tiempo a esperar
             long esperar = valor();
             // imprimo valores (Prueba)
-            String val = tiempo + " " + mostrarHexadecimal(hash) + " " + esperar ;
-            alServidor.writeObject(val);
+            //String val = tiempo + " " + mostrarHexadecimal(hash) + " " + esperar ;
+            alServidor.writeObject(tiempo);
+            alServidor.writeObject(mostrarHexadecimal(hash));
             alServidor.flush();            
             Thread.sleep(esperar);
         }

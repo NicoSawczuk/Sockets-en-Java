@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import modelo.Hilo;
+import modelo.ServidorAuxiliar;
 
 
 /**
@@ -33,9 +34,10 @@ public class Servidor {
             try {
                 ServerSocket svc = new ServerSocket(puerto);
                 try {
+                    ServidorAuxiliar serviAux = new ServidorAuxiliar();
                     while(true){                        
                         Socket req = svc.accept();
-                        Hilo hilo = new Hilo(req) ;
+                        Hilo hilo = new Hilo(req, serviAux) ;
                         hilo.start();
                     }
                 } catch (IOException ex) {
