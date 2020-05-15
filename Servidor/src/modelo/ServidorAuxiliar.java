@@ -51,7 +51,7 @@ public class ServidorAuxiliar {
             try {
                 String data = "";
                 data = nombreNodo + ',' + minimo + ',' + promedio + ',' + maximo + ',' + '\n';
-                File file = new File("\\home\\resultados_retraso.csv");
+                File file = new File("/resultados/resultados_retraso.csv");
                 // Si el archivo no existe, se crea!
 
                 if (!file.exists()) {
@@ -90,7 +90,6 @@ public class ServidorAuxiliar {
             if (fw != null) {
                 fw.close();
             }
-            System.out.println("Revise su carpeta /home/");
         } catch (IOException ex) {
         }
     }
@@ -103,9 +102,8 @@ public class ServidorAuxiliar {
             try {
                 String data = "";
                 data = nombreNodo + ',' + cantEventos + ',' + tiempoTotal + '\n';
-                File file = new File("\\home\\resultados_ancho_banda.csv");
+                File file = new File("/resultados/resultados_ancho_banda.csv");
                 // Si el archivo no existe, se crea!
-
                 if (!file.exists()) {
                     PrintWriter pw = new PrintWriter(file);
                     StringBuilder sb = new StringBuilder();
@@ -139,7 +137,6 @@ public class ServidorAuxiliar {
             if (fw != null) {
                 fw.close();
             }
-            System.out.println("Revise su carpeta /home/");
         } catch (IOException ex) {
         }
     }
